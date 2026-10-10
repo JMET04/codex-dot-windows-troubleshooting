@@ -5,11 +5,20 @@ import argparse
 import json
 import os
 import queue
+import re
 import subprocess
 import threading
 import time
+from collections import deque
 from pathlib import Path
 from resolve_codex import resolve_codex
+
+
+def safe_diagnostic(text):
+    """Keep diagnostics private and discard entire credential-bearing lines."""
+    if re.search(r"bearer|authorization|cookie|password|secret|token|api[_-]?key|eyJ[A-Za-z0-9_.-]{20,}", text, re.I):
+        return "[redacted credential-bearing diagnostic]"
+    return text.strip()[:500]
 
 
 class ReadOnlyClient:
@@ -17,14 +26,29 @@ class ReadOnlyClient:
         self.timeout = timeout
         self.events = queue.Queue()
         self.request_id = 0
+        self.startup_errors = deque(maxlen=12)
+        self.diagnostic_lock = threading.Lock()
         flags = subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0
         self.proc = subprocess.Popen(
             [resolve_codex(executable), "app-server"],
             stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-            stderr=subprocess.DEVNULL, text=True, encoding="utf-8",
+            stderr=subprocess.PIPE, text=True, encoding="utf-8", errors="replace",
             creationflags=flags,
         )
         threading.Thread(target=self._pump, daemon=True).start()
+        self.stderr_thread = threading.Thread(target=self._pump_stderr, daemon=True)
+        self.stderr_thread.start()
+
+    def _pump_stderr(self):
+        for line in self.proc.stderr:
+            if re.search(r"error|denied|failed|panic|sandbox|security|allocation|memory", line, re.I):
+                with self.diagnostic_lock:
+                    self.startup_errors.append(safe_diagnostic(line))
+
+    def startup_diagnostics(self):
+        with self.diagnostic_lock:
+            tail = "\n".join(self.startup_errors)[-2000:]
+        return {"exit_code": self.proc.poll(), "stderr_tail": tail}
 
     def _pump(self):
         for line in self.proc.stdout:
@@ -58,7 +82,13 @@ class ReadOnlyClient:
             except queue.Empty:
                 raise TimeoutError(method + " timed out; inspect actual state")
             if event.get("transport_ended"):
-                raise RuntimeError("App-server ended before returning a result")
+                self.stderr_thread.join(timeout=0.2)
+                diagnostic = self.startup_diagnostics()
+                raise RuntimeError(
+                    "App-server ended before returning a result; exit=" +
+                    str(diagnostic["exit_code"]) + "; startup=" +
+                    (diagnostic["stderr_tail"] or "no captured startup error")
+                )
             if event.get("id") != request_id:
                 continue
             if "error" in event:
@@ -87,6 +117,8 @@ class ReadOnlyClient:
             self.proc.terminate()
             self.proc.wait(timeout=5)
         self.proc.stdout.close()
+        self.stderr_thread.join(timeout=1)
+        self.proc.stderr.close()
 
     def read_latest_turn(self, thread_id):
         response = self.request("thread/turns/list", {
@@ -121,13 +153,15 @@ def main():
                 result["latest_turn"] = client.read_latest_turn(args.thread)
             result["success"] = result["thread"]["id"] == args.thread
         except Exception as exc:
-            result["error"] = str(exc)
+            result["error"] = safe_diagnostic(str(exc))
         finally:
             if client is not None:
                 try:
                     client.close()
                 except Exception as exc:
-                    result["cleanup_error"] = str(exc)
+                    result["cleanup_error"] = safe_diagnostic(str(exc))
+                if "error" in result:
+                    result["startup_diagnostics"] = client.startup_diagnostics()
             json.dump(result, report, ensure_ascii=False, indent=2)
             report.write("\n")
     print("Metadata probe succeeded." if result["success"] else

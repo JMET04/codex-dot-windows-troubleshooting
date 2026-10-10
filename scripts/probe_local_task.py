@@ -38,8 +38,12 @@ class ReadOnlyClient:
         self.proc.stdin.flush()
 
     def request(self, method, params):
-        if method not in {"initialize", "thread/read"}:
+        if method not in {"initialize", "thread/read", "thread/turns/list"}:
             raise ValueError("This probe supports metadata reads only")
+        if method == "thread/turns/list" and (
+            params.get("limit") != 1 or params.get("itemsView") != "notLoaded"
+        ):
+            raise ValueError("Only one latest turn without items is supported")
         self.request_id += 1
         request_id = self.request_id
         self._write({"id": request_id, "method": method, "params": params})
@@ -83,6 +87,14 @@ class ReadOnlyClient:
             self.proc.wait(timeout=5)
         self.proc.stdout.close()
 
+    def read_latest_turn(self, thread_id):
+        response = self.request("thread/turns/list", {
+            "threadId": thread_id, "limit": 1,
+            "sortDirection": "desc", "itemsView": "notLoaded",
+        })
+        return [{key: turn.get(key) for key in ("id", "status")}
+                for turn in response.get("data", [])]
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
@@ -92,6 +104,8 @@ def main():
                         help="A local thread explicitly authorized for reading")
     parser.add_argument("--output", required=True,
                         help="NEW private local report path; existing files are refused")
+    parser.add_argument("--latest-turn", action="store_true",
+                        help="Also read one latest turn ID/status without conversation items")
     args = parser.parse_args()
     output = Path(args.output)
     # Reserve a new report before starting the client; never overwrite evidence.
@@ -102,6 +116,8 @@ def main():
         try:
             client = ReadOnlyClient(args.codex)
             result["thread"] = client.read_metadata(args.thread)
+            if args.latest_turn:
+                result["latest_turn"] = client.read_latest_turn(args.thread)
             result["success"] = result["thread"]["id"] == args.thread
         except Exception as exc:
             result["error"] = str(exc)

@@ -43,5 +43,26 @@
     "Background monitoring",
     "Installed desktop includes upstream PR fix"
   ],
+  "same_day_recurrence": {
+    "local_app_server_failed_memory_allocation_bytes": 524288,
+    "windows_resource_exhaustion_event_id": 2004,
+    "sandbox_fallback_still_configured": true,
+    "pagefile_added_initial_mib": 16384,
+    "pagefile_added_maximum_mib": 24576,
+    "pagefile_live_allocation_verified": true,
+    "live_commit_limit_bytes": 48372211712,
+    "live_commit_used_percent": 64,
+    "dot_scoped_stdio_metadata_read": true,
+    "dot_scoped_stdio_send_attempts": 0,
+    "scoped_stdio_resume_error": "already has an active writer",
+    "dot_task_native_ui_tool_exposed": false,
+    "dot_task_native_ui_send_count": 0,
+    "authorized_desktop_owner_relay_send_count": 1,
+    "authorized_desktop_owner_relay_reply_verified": true,
+    "relay_is_dot_direct_control": false,
+    "lesson": "Desktop idle does not mean a second app-server owns the writer. Use the owning desktop route; do not force a lock takeover.",
+    "long_term_stability_proven": false,
+    "individual_application_memory_leak_proven": false
+  },
   "privacy": "Real personal names, account contacts, paths, thread IDs, turn IDs, request IDs and nonce removed. This is not a raw API response or independently authenticated public evidence."
 }

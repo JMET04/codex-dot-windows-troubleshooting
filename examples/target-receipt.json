@@ -1,0 +1,21 @@
+{
+  "data_kind": "synthetic",
+  "verification_source": "demonstration, not an actual API receipt",
+  "thread": {
+    "id": "demo-authorized-thread"
+  },
+  "turns": [
+    {
+      "id": "demo-turn",
+      "status": "completed",
+      "error": null,
+      "items": [
+        {
+          "type": "agentMessage",
+          "text": "DEMO-NONCE-ONLY",
+          "phase": "final_answer"
+        }
+      ]
+    }
+  ]
+}

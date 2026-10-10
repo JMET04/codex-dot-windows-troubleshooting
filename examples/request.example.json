@@ -1,0 +1,9 @@
+{
+  "data_kind": "synthetic",
+  "protocol": "dot-local-folder-v1",
+  "request_id": "demo-request-001",
+  "nonce": "DEMO-NONCE-ONLY",
+  "target": "USER_AUTHORIZED_TARGET",
+  "scope": "Write and read back a test file in the authorized workspace. No existing-task message unless separately authorized.",
+  "reply_file": "outbox/demo-request-001.json"
+}

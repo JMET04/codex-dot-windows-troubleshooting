@@ -1,0 +1,5 @@
+# Only merge this into the existing [windows] section when applicable.
+# Back up the active configuration locally. Do not duplicate TOML sections.
+# Secondary legacy fallback; see docs/repair-guide.md for limits and rollback.
+[windows]
+sandbox = "unelevated"

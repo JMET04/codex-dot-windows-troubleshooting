@@ -1,0 +1,47 @@
+{
+  "data_kind": "redacted_fact_summary_of_actual_local_case",
+  "case_date": "2026-10-10",
+  "provenance": "Generated after comparing privately retained Dot worker evidence against an independent desktop-native target receipt. Raw records are not published.",
+  "environment": {
+    "desktop_version_from_log": "26.1002.7124.0",
+    "bundled_cli_version": "0.162.0-alpha.2",
+    "os_family": "Windows"
+  },
+  "initial_failure": {
+    "process_started": false,
+    "stage": "legacy elevated runtime ACL refresh",
+    "runtime": "node_repl.exe",
+    "windows_error": 32,
+    "helper_error": "helper_unknown_error: setup refresh had errors"
+  },
+  "change": {
+    "configuration_section": "windows",
+    "configuration_key": "sandbox",
+    "before": "elevated",
+    "after": "unelevated",
+    "other_task_permission_settings_changed": false
+  },
+  "verified": {
+    "dot_local_executor": true,
+    "dot_file_write_read_round_trip": true,
+    "official_local_target_metadata_read": true,
+    "single_authorized_existing_target_message_accepted": true,
+    "target_turn_completed": true,
+    "sender_and_independent_target_turn_ids_match": true,
+    "exact_target_final_reply_matches_nonce": true
+  },
+  "observed_errors_remaining": {
+    "cloud_read": "unsupported placement format version 1",
+    "cloud_send_to_local_target": "NOT_FOUND",
+    "old_activity_chat_load": "app-server unavailable / durable 403; causal relation to placement error unconfirmed"
+  },
+  "timeout_lesson": "A continuation call timed out before the worker eventually completed. Reconcile actual result before retry.",
+  "not_established": [
+    "Universal existing-chat control",
+    "Every desktop application mouse/keyboard workflow",
+    "Native cloud access to old local chats repaired",
+    "Background monitoring",
+    "Installed desktop includes upstream PR fix"
+  ],
+  "privacy": "Real personal names, account contacts, paths, thread IDs, turn IDs, request IDs and nonce removed. This is not a raw API response or independently authenticated public evidence."
+}

@@ -1,0 +1,14 @@
+{
+  "data_kind": "synthetic",
+  "thread_id": "demo-authorized-thread",
+  "success": true,
+  "control": {
+    "message_accepted": true,
+    "turn_id": "demo-turn",
+    "turn_completed": true,
+    "turn_status": "completed",
+    "turn_error": null,
+    "nonce": "DEMO-NONCE-ONLY",
+    "reply": "DEMO-NONCE-ONLY"
+  }
+}

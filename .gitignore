@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+local-reports/
+private/
+config.toml
+config-before-*.toml
+.env
+*.sqlite*
+dist/

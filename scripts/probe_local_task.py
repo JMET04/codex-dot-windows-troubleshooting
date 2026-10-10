@@ -9,6 +9,7 @@ import subprocess
 import threading
 import time
 from pathlib import Path
+from resolve_codex import resolve_codex
 
 
 class ReadOnlyClient:
@@ -18,7 +19,7 @@ class ReadOnlyClient:
         self.request_id = 0
         flags = subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0
         self.proc = subprocess.Popen(
-            [executable, "app-server"],
+            [resolve_codex(executable), "app-server"],
             stdin=subprocess.PIPE, stdout=subprocess.PIPE,
             stderr=subprocess.DEVNULL, text=True, encoding="utf-8",
             creationflags=flags,
@@ -98,8 +99,8 @@ class ReadOnlyClient:
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--codex", default="codex",
-                        help="Exact installed Codex CLI path, or codex from PATH")
+    parser.add_argument("--codex", default=None,
+                        help="Optional exact CLI path; otherwise discover the installed desktop CLI or PATH")
     parser.add_argument("--thread", required=True,
                         help="A local thread explicitly authorized for reading")
     parser.add_argument("--output", required=True,

@@ -8,6 +8,8 @@
 
 **电脑离线更新：** 后续在线通道反复遭遇 WebSocket HTTP 403，本机任务接口和普通模型连接仍可用。官方已有会话刷新已执行，桌面在线通道仍未恢复；这项故障与沙盒、内存及任务工具缺失分别检查。[在线通道排查记录](docs/offline-online-channel.md)。
 
+**桌面更新兼容修复：** 桌面更新移除了旧 CLI 缓存目录，导致原来写死程序路径的文件通道工具无法启动。工具现已自动发现安装版 CLI，本机只读查询和 7 项测试通过。月儿派发诊断任务仍返回 `UNKNOWN`，直接电脑控制尚未恢复。[更新兼容性与本次验证](docs/runtime-update-compatibility.md)。
+
 ## 快速判断
 
 | 现象 | 先检查什么 | 本案例结果 |
@@ -42,6 +44,7 @@ sandbox = "unelevated"
 ## 辅助工具
 
 - `scripts/probe_local_task.py`：通过安装版官方 app-server 读取一个指定聊天的元数据；可用 `--latest-turn` 读取最新回合 ID/状态。没有聊天内容、不恢复任务、不发送指令。报告可能含本机路径和聊天名称，保持本地。
+- `scripts/resolve_codex.py`：Windows 上自动查找桌面安装的 CLI，避免更新后仍引用已删除的版本目录；也可用 `--codex` 明确指定路径。此工具不更改桌面应用本身。
 - `scripts/verify_receipts.py`：离线比较“发送方结果”和“目标实际回执”，要求回合完成、目标和回合一致、回复完全匹配。
 - `examples/`：合成的协议与回执样例；**不是新的实测结果**。
 - `evidence/case-summary.redacted.json`：从原始本机证据核对后生成的脱敏事实摘要；原始记录不在仓库内。

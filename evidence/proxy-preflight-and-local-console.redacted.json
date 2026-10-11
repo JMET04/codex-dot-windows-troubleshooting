@@ -39,6 +39,18 @@
     "original_hosts_unchanged": true,
     "native_desktop_route_trial_completed": false
   },
+  "native_dot_dispatch_reconciliation": {
+    "provenance": "Actual native Dot main UI reply; reported tool calls are not independently inspected server traces.",
+    "reported_new_diagnostic_submission_count": 1,
+    "reported_error_type": "AppServerBackendRequestError",
+    "reported_error_code": "UNKNOWN",
+    "reported_worker_after_reconciliation": "previous_completed_turn_only",
+    "new_execution_turn_id_obtained": false,
+    "new_terminal_output_or_exit_code_obtained": false,
+    "unknown_request_replayed": false,
+    "terminal_execution_failure_claimed": false,
+    "causal_link_to_cloud_403_verified": false
+  },
   "separate_local_console": {
     "human_creation_authorized": true,
     "own_native_window_enumeration_reported_success": true,

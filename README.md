@@ -20,9 +20,12 @@
 
 **运行中连接排查：** 用户要求保留登录和任务，后续不再以重新登录或重启作为前置步骤。匿名请求对照与安装版静态检查发现可能不同的云端 WebSocket 路由，具体拒绝原因及运行中修复仍未确认。[新增网络证据与检修范围](docs/runtime-network-routing.md)。
 
+**运行中设置核对：** 实际页面中完整访问、允许连接、任意应用控制均已开启。云端恢复对话仍报 app-server 不可用，日志记录握手 403 和持续自动重连。新增只读日志分类工具，14 项测试及当前日志实测通过；这项工具改善诊断，尚未恢复月儿控制。[页面与日志核对](docs/runtime-network-routing.md#运行中页面与日志核对)。
+
 | 现象 | 先检查什么 | 本案例结果 |
 | --- | --- | --- |
 | 电脑离线或未授权 | Dot 自己的电脑连接权限与在线上报通道 | 早期连接已通过；后续在线通道反复返回 HTTP 403 |
+| “已连接”但恢复对话报 app-server 不可用 | 最新 durable 云端握手事件及时间，避免沿用缓存标签 | 完整访问和应用控制已开启，云端握手仍为 403 |
 | 命令尚未创建就失败 | Windows 沙盒初始化日志 | elevated 初始化触发文件占用错误 32 |
 | MXC launcher 报 0x80070020 | 实际沙盒选择、桌面 prefer_mxc、系统 requirements | 限制 MXC 后独立 CLI 与 Dot 自己的终端检查通过 |
 | 命令能启动，写指定文件被拒绝 | 该任务的目录权限、正式授权机制 | 与初始化故障分开处理 |
@@ -53,6 +56,7 @@ sandbox = "unelevated"
 ## 辅助工具
 
 - `scripts/probe_local_task.py`：通过安装版官方 app-server 读取一个指定聊天的元数据；可用 `--latest-turn` 读取最新回合 ID/状态。服务提前退出时保留退出码及最多 2000 字符的错误摘要，丢弃含凭据标记的整行。没有聊天内容、不恢复任务、不发送指令。报告可能含本机路径和聊天名称，保持本地。
+- `scripts/inspect_cloud_connection.py`：只读检查当天及前一天 UTC 日志，最多 12 个文件、每个尾部 256 KiB。区分本机错误、近期云端 403、旧事件和新 ready 状态；只输出状态、时间及计数，没有原始日志或标识。不连接服务器、不刷新登录、不改设置；ready 仍需实际任务验收。
 - `scripts/resolve_codex.py`：Windows 上自动查找桌面安装的 CLI，避免更新后仍引用已删除的版本目录；也可用 `--codex` 明确指定路径。此工具不更改桌面应用本身。
 - `scripts/verify_receipts.py`：离线比较“发送方结果”和“目标实际回执”，要求回合完成、目标和回合一致、回复完全匹配。
 - `examples/`：合成的协议与回执样例；**不是新的实测结果**。
@@ -61,9 +65,12 @@ sandbox = "unelevated"
 
 ```powershell
 python scripts/probe_local_task.py --help
+python scripts/inspect_cloud_connection.py --output ./local-reports/cloud-state.json
 python scripts/verify_receipts.py examples/sender-result.json examples/target-receipt.json
 python -m unittest discover -s tests -v
 ```
+
+日志检查示例要求先准备 `local-reports` 目录，报告路径必须是新文件。其他系统可用 `--log-root` 明确指定桌面日志根目录；该目录须包含 UTC `YYYY/MM/DD` 子目录。
 
 下载完整 ZIP 请打开 [Releases](https://github.com/JMET04/codex-dot-windows-troubleshooting/releases)。
 

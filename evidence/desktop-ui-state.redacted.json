@@ -1,0 +1,37 @@
+{
+  "kind": "redacted_case_summary_not_raw_response",
+  "observation_date": "2026-10-11",
+  "windows_package_version": "26.1007.2314.0",
+  "observed_ui": {
+    "full_access_enabled": true,
+    "allow_connections_enabled": true,
+    "control_any_app_enabled": true,
+    "dot_computer_connected_label_visible": true,
+    "dedicated_durable_reconnect_found_in_inspected_pages": false,
+    "conversation_resume_app_server_unavailable": true
+  },
+  "runtime_log_check": {
+    "status": "cloud_websocket_http_403",
+    "latest_event_timestamp": "2026-10-11T00:14:47.201000+00:00",
+    "event_age_seconds_at_inspection": 17.4,
+    "files_examined": 12,
+    "max_bytes_per_file": 262144,
+    "read_only": true,
+    "includes_raw_logs": false
+  },
+  "validation": {
+    "unit_tests_passed": 14,
+    "real_desktop_log_probe_ran": true,
+    "dot_computer_control_verified": false,
+    "server_rejection_reason_verified": false
+  },
+  "actions": {
+    "login_preserved": true,
+    "user_tasks_preserved": true,
+    "permissions_changed": false,
+    "network_settings_changed": false,
+    "application_restarted": false,
+    "dot_chat_restarted": false,
+    "new_dot_request_sent": false
+  }
+}

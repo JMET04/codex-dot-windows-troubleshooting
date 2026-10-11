@@ -44,3 +44,13 @@ WARP 的流量模式会让设备流量经过隧道；域名分流实际影响解
 新增测试覆盖证书拒绝后不重试、默认信任和域名验证、代理认证或伪造成功响应被拒绝、头部读取上限、固定目标限制和既有证据保护。全仓 20 项测试通过；原生控制尚未验收。
 
 官方文档支持在桌面浏览器访问同一个 Dot，电脑授权不会因为切换消息入口而撤销。本案例网页入口未能加载，因此尚不能把它作为已恢复的通道。[Dot 的消息入口](https://learn.chatgpt.com/docs/dots/channels)，[电脑与应用授权](https://learn.chatgpt.com/docs/dots/computers-and-apps)。
+
+## 后续传输试验与限定路由检查
+
+现有 WARP CLI 提供 MASQUE 的 `h2-only` 传输选项。一次有回滚的对照请求返回退出码 0，但随后 30 秒内客户端保持 Connecting，未验证实际建立 HTTP/2 传输，也未恢复 Dot。撤销试验选项后，已核对保存的设置和原工作模式，客户端重新 Connected；云端握手 403 随之再次出现。不能把“接受设置命令”视为传输建立，更不能把这次结果推广为 HTTP/2 在该环境永远不可用。[Cloudflare 客户端连接与端口说明](https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/)。
+
+另检查已安装的 FlClash `0.8.91+2025122201`，拟将后台的公开解析地址单独路由至现有回环代理。当前 Mihomo 文档支持使用 `route-address` 限制路由网段，但上层客户端可能重写这些选项。[Mihomo TUN 配置](https://wiki.metacubex.one/config/inbound/tun/)。
+
+FlClash 对应 `v0.8.91` 标签的源码中，`Tun.getRealTun` 的桌面分支将 `autoRoute` 设为 true，并将 `routeAddress` 清空；本机界面仅提供虚拟网卡开关和协议栈，没有显示限定网段设置。源码检查不等于开启后的运行验证，也不能据此声称安装包的每个分支都已检查。因为尚无证据保证限定范围，未开启 TUN，未将此方案描述为修复。[对应版本的桌面分支](https://github.com/chen08209/FlClash/blob/v0.8.91/lib/models/clash_config.dart#L195)。
+
+检查前完整备份偏好文件并关闭自动联网动作；正常退出本次打开的界面及核心后，偏好文件逐字节恢复为原值，原系统代理保留。没有启用虚拟网卡或改变系统 DNS。最后复查时 WARP 报告 Connected / Network: healthy，桌面仍记录新的云端 WebSocket HTTP 403。健康的隧道不证明 Dot 握手成功，403 本身也没有给出服务端拒绝原因。脱敏记录见 [transport-and-route-scope.redacted.json](../evidence/transport-and-route-scope.redacted.json)。

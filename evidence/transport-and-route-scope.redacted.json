@@ -1,0 +1,41 @@
+{
+  "record_date": "2026-10-11",
+  "source_kind": "redacted_local_observations_and_public_versioned_source",
+  "warp_transport_test": {
+    "requested_option": "h2-only",
+    "set_command_exit_code": 0,
+    "observation_seconds": 30,
+    "connection_established_during_observation": false,
+    "active_http2_transport_verified": false,
+    "test_option_reset_exit_code": 0,
+    "saved_settings_and_mode_restored": true,
+    "does_not_prove_http2_is_always_unavailable": true
+  },
+  "flclash_inspection": {
+    "installed_version": "0.8.91+2025122201",
+    "source_tag": "v0.8.91",
+    "source_url": "https://github.com/chen08209/FlClash/blob/v0.8.91/lib/models/clash_config.dart#L195",
+    "source_desktop_branch_clears_route_address": true,
+    "bounded_route_activation_verified": false,
+    "tun_activated": false,
+    "own_app_and_core_exited": true,
+    "preferences_original_bytes_restored": true,
+    "existing_system_proxy_preserved": true,
+    "system_dns_changed": false
+  },
+  "final_state": {
+    "warp_status": "Connected",
+    "warp_network": "healthy",
+    "desktop_cloud_status": "cloud_websocket_http_403",
+    "latest_event_is_fresh": true,
+    "server_rejection_reason_confirmed": false,
+    "native_dot_computer_control_verified": false
+  },
+  "privacy": {
+    "includes_credentials": false,
+    "includes_user_configurations": false,
+    "includes_addresses_or_nodes": false,
+    "includes_chat_or_device_identifiers": false,
+    "includes_raw_logs": false
+  }
+}

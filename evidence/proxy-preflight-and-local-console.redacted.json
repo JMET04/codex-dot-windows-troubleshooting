@@ -1,0 +1,54 @@
+{
+  "data_kind": "redacted_fact_summary_of_actual_local_case",
+  "updated_local_date": "2026-10-12",
+  "native_dot_control_verified": false,
+  "official_proxy_feature_candidate": {
+    "feature": "respect_system_proxy",
+    "original_user_value_absent": true,
+    "official_enable_command_exit_code": 0,
+    "new_cli_effective_value_true": true,
+    "existing_desktop_hot_reload_verified": false,
+    "readonly_doctor_exit_codes": [1, 1],
+    "exact_original_config_bytes_restored": true
+  },
+  "strict_tls_protocol_comparison_sequence": [
+    {"http_connect": "timeout", "socks5_remote_dns": "tls_verified"},
+    {"http_connect": "tls_verified", "socks5_remote_dns": "target_tls_timeout"}
+  ],
+  "bounded_relay": {
+    "application_bundle_modified": false,
+    "third_party_installer_run": false,
+    "maximum_cli_lifetime_seconds": 180,
+    "python_http_integrated_tls_verified_once": true,
+    "python_socks_integrated_tls_verified": false,
+    "later_node_integrated_tls_verified": false,
+    "later_node_error_type": "TimeoutError",
+    "strict_validation_retained": true,
+    "credentials_used": false,
+    "application_payload_sent_by_probe": false,
+    "all_owned_test_listeners_closed": true,
+    "synthetic_unit_tests_passed": 27,
+    "new_proxy_tests_passed": 7
+  },
+  "administrator_trial": {
+    "human_consent_received": true,
+    "standard_uac_launch_accepted": true,
+    "maximum_requested_mapping_seconds": 60,
+    "tls_preflight_verified": false,
+    "mapping_applied": false,
+    "original_hosts_unchanged": true,
+    "native_desktop_route_trial_completed": false
+  },
+  "separate_local_console": {
+    "human_creation_authorized": true,
+    "own_native_window_enumeration_reported_success": true,
+    "window_count_reported": 6,
+    "own_formal_local_chat_read_call_completed": true,
+    "own_powershell_marker_verified": true,
+    "powershell_exit_code": 0,
+    "own_turn_trace_read_by_diagnostic_chat": true,
+    "mouse_keyboard_input_tested": false,
+    "native_dot_restoration_claimed": false
+  },
+  "privacy": "No personal paths, account details, proxy nodes, credentials, host backups, real conversation identifiers, raw reports or screenshots. Checks occurred at different times and do not isolate a service-side cause."
+}

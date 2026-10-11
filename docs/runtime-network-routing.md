@@ -14,6 +14,8 @@
 | chatgpt.com | GET | 已配置代理 | 403，Cloudflare challenge 标记 |
 | api.openai.com | GET | 无显式代理 | 403，unsupported-region 标记 |
 
+另一次匿名 GET 加入标准 WebSocket Upgrade 请求头：已配置代理路径返回 401，无显式代理路径返回 403，均无 challenge 标记。没有发送认证协议或凭据；这仍不是桌面真实会话的 WebSocket 验收。
+
 不同方法、服务和路径的结果不同，不能把 HEAD 的 challenge 直接归因到桌面 WebSocket。401 只表示该匿名请求获得了 HTTP 响应，不证明登录后的连接会成功。“无显式代理”也不证明操作系统或上游没有其他网络转发。以上检查不是切换路由或绕过验证的方案。
 
 ## 安装版的连接路径
@@ -33,3 +35,7 @@
 可供官方或网络管理者核对的材料是：安装版本、握手失败时间、公开主机、匿名请求的方法及状态、静态连接路径摘要。原始日志、设备标识和配置备份保留本地；公开脱敏摘要见 [network-routing.redacted.json](../evidence/network-routing.redacted.json)。
 
 验收仍要求：在线通道成功连接，Dot 自己读取实际失败回执，以及新的授权任务得到完整回复。已经保存的电脑授权和本机终端成功记录，不能代替这些结果。[Dot 电脑与应用连接](https://learn.chatgpt.com/docs/dots/computers-and-apps)。
+
+## 与公开问题的关系
+
+查询时，官方 GitHub 仓库的 [问题 #49458](https://github.com/openai/codex/issues/49458) 仍为 open，记录了其他 Windows 用户的 Dot 任务缺少 Computer Use 工具的现象。这是用户提交的问题记录，不是官方确认的根因或修复公告。工具缺失与本案例当前云端握手 403 必须分别验收，不能仅凭相似症状认定同一缺陷，也不能据此声称某个更新已经解决。

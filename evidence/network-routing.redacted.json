@@ -1,0 +1,103 @@
+{
+  "recorded_date": "2026-10-11",
+  "scope": "Anonymous HTTP service-root requests; no account, browser session, chat content, device ID, raw headers or body",
+  "network_settings_changed": false,
+  "observations": [
+    {
+      "service": "codex-cloud-backend.chatgpt.com",
+      "method": "HEAD",
+      "route": "configured_proxy",
+      "authenticated": false,
+      "status": 403,
+      "cloudflare_challenge": true
+    },
+    {
+      "service": "codex-cloud-backend.chatgpt.com",
+      "method": "HEAD",
+      "route": "no_explicit_proxy",
+      "authenticated": false,
+      "status": 403,
+      "cloudflare_challenge": false
+    },
+    {
+      "service": "chatgpt.com",
+      "method": "HEAD",
+      "route": "configured_proxy",
+      "authenticated": false,
+      "error_summary": "connection_or_tls_error"
+    },
+    {
+      "service": "chatgpt.com",
+      "method": "HEAD",
+      "route": "no_explicit_proxy",
+      "authenticated": false,
+      "status": 403,
+      "cloudflare_challenge": false
+    },
+    {
+      "service": "api.openai.com",
+      "method": "HEAD",
+      "route": "configured_proxy",
+      "authenticated": false,
+      "status": 421,
+      "cloudflare_challenge": false
+    },
+    {
+      "service": "api.openai.com",
+      "method": "HEAD",
+      "route": "no_explicit_proxy",
+      "authenticated": false,
+      "status": 403,
+      "cloudflare_challenge": false
+    },
+    {
+      "service": "codex-cloud-backend.chatgpt.com",
+      "method": "GET",
+      "route": "configured_proxy",
+      "authenticated": false,
+      "status": 401,
+      "cloudflare_challenge": false,
+      "unsupported_region": false
+    },
+    {
+      "service": "codex-cloud-backend.chatgpt.com",
+      "method": "GET",
+      "route": "no_explicit_proxy",
+      "authenticated": false,
+      "status": 403,
+      "cloudflare_challenge": false,
+      "unsupported_region": false
+    },
+    {
+      "service": "chatgpt.com",
+      "method": "GET",
+      "route": "configured_proxy",
+      "authenticated": false,
+      "status": 403,
+      "cloudflare_challenge": true,
+      "unsupported_region": false
+    },
+    {
+      "service": "api.openai.com",
+      "method": "GET",
+      "route": "no_explicit_proxy",
+      "authenticated": false,
+      "status": 403,
+      "cloudflare_challenge": false,
+      "unsupported_region": true
+    }
+  ],
+  "static_inspection": {
+    "installed_package": "26.1007.2314.0",
+    "public_cloud_explicit_socks_proxy_selected": false,
+    "inspected_main_windows_proxy_resolution_calls": 0,
+    "live_egress_verified": false,
+    "installed_code_modified": false
+  },
+  "desktop_cloud_handshake_status": 403,
+  "cloud_ready_verified": false,
+  "native_dot_control_verified": false,
+  "new_test_sent": false,
+  "hot_repair_constraint": "Preserve current login and running tasks; no mandatory logout or app restart",
+  "conclusion": "Network path differences are a supported hypothesis, not a proven cause or verified runtime fix."
+}

@@ -1,6 +1,10 @@
 {
   "recorded_date": "2026-10-12",
   "data_kind": "redacted_live_observations",
+  "observation_scope": "historical_relay_experiments_retired_by_user",
+  "scheduled_receiver_currently_active": false,
+  "relay_currently_authorized": false,
+  "current_required_transport": "official_native_dot_local_computer_connection",
   "private_page_used": true,
   "dot_generated_request_written_and_read_back": true,
   "desktop_read_new_page_request": true,
